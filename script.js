@@ -1,49 +1,33 @@
 // JS-код с липким навигационным меню
-let nav = document.querySelector("nav");
-let scrollBtn = document.querySelector(".scroll-button a");
-console.log(scrollBtn);
-let val;
-window.onscroll = function() {
-  if(document.documentElement.scrollTop > 20){
-    nav.classList.add("sticky");
-    scrollBtn.style.display = "block";
-  }else{
-    nav.classList.remove("sticky");
-    scrollBtn.style.display = "none";
-  }
-
+const nav = document.querySelector('.navbar')
+const scrollBtn = document.querySelector('.scroll-button a')
+window.onscroll = function () {
+    if (document.documentElement.scrollTop > 20) {
+        nav.classList.add('sticky')
+    } else {
+        nav.classList.remove('sticky')
+    }
 }
 
-// Боковое навигационное меню
-let body = document.querySelector("body");
-let navBar = document.querySelector(".navbar");
-let menuBtn = document.querySelector(".menu-btn");
-let cancelBtn = document.querySelector(".cancel-btn");
-menuBtn.onclick = function(){
-  navBar.classList.add("active");
-  menuBtn.style.opacity = "0";
-  menuBtn.style.pointerEvents = "none";
-  body.style.overflow = "hidden";
-  scrollBtn.style.pointerEvents = "none";
-}
-cancelBtn.onclick = function(){
-  navBar.classList.remove("active");
-  menuBtn.style.opacity = "1";
-  menuBtn.style.pointerEvents = "auto";
-  body.style.overflow = "auto";
-  scrollBtn.style.pointerEvents = "auto";
-}
+const menuButton = document.querySelector('.menu__button')
+const dropdown = document.querySelector('.dropdown')
 
-// Боковая панель навигации закрывается, когда мы нажимаем На навигационные ссылки
-let navLinks = document.querySelectorAll(".menu li a");
-for (var i = 0; i < navLinks.length; i++) {
-  navLinks[i].addEventListener("click" , function() {
-    navBar.classList.remove("active");
-    menuBtn.style.opacity = "1";
-    menuBtn.style.pointerEvents = "auto";
-  });
-}
+menuButton.addEventListener('click', () => {
+    if (dropdown.classList.contains('dropdown--show')) {
+        dropdown.classList.remove('dropdown--show')
+        menuButton.classList.remove('menu__button--close')
+    } else {
+        dropdown.classList.add('dropdown--show')
+        menuButton.classList.add('menu__button--close')
+    }
+})
 
-
-
-
+dropdown.addEventListener('click', (event) => {
+    if (
+        event.target.nodeName === 'A' &&
+        dropdown.classList.contains('dropdown--show')
+    ) {
+        dropdown.classList.remove('dropdown--show')
+        menuButton.classList.remove('menu__button--close')
+    }
+})
